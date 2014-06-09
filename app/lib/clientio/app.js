@@ -10,5 +10,9 @@ namespace('clientio', function() {
     socket.on('message', function(eventName, args) {
         console.log(eventName, ' - ', args);
     });
+    //test function
+    socket.on('passEvent', function (name, body) {
+      console.log(name+" "+body);
+    });
   });
 });
