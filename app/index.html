@@ -17,7 +17,15 @@
 
         <!-- Add your site or application content here -->
         <!-- <p>Hello world! This is HTML5 Boilerplate.</p> -->
-        <div class="event-emit-container"></div>
+        <div>
+            <p>Type event name: <input type="text" id="event-name">
+        </div>
+        <div>
+            <p style="vertical-align:top;">Type event body: <textarea id="event-body" cols="19" rows="5"></textarea></p>
+        </div>
+        <div>
+            <span tabindex="0" style="cursor:pointer; background-color: black; color:white; padding:10px;" id="btn-event-emit">EMIT</span>
+        </div>
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="/lib/core.js"></script>
