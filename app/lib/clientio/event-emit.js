@@ -1,7 +1,7 @@
 namespace('clientio', function() {
   var ADDRESS = 'http://localhost:8080';
-  this.connect(ADDRESS, function (socket) {
   
+  this.eventEmit = function (socket) {
     $('.event-emit-container').load('partial/event-emit.html', function () {
     	$('#btn-event-emit').click(function () {
     		var	eventName = $('#event-name').val();
@@ -24,5 +24,5 @@ namespace('clientio', function() {
     		}
     	});
     });
-  });
+  };
 });
