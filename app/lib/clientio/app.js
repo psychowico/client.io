@@ -11,6 +11,8 @@ namespace('clientio', function() {
         console.log(eventName, ' - ', args);
     });
     
-    clientio.eventEmit(socket);
+    var element = $('body');
+    
+    clientio.eventEmit(socket, element);
   });
 });
