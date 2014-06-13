@@ -10,5 +10,7 @@ namespace('clientio', function() {
     socket.on('message', function(eventName, args) {
         console.log(eventName, ' - ', args);
     });
+    
+    clientio.eventEmit(socket);
   });
 });
