@@ -11,6 +11,11 @@ namespace('clientio', function() {
         console.log(eventName, ' - ', args);
     });
     
-    clientio.eventEmit(socket);
+    var element1 = $('#event-wraper1');
+    clientio.eventEmit(socket, element1);
+
+    var element2 = $('#event-wraper2');
+    clientio.eventEmit(socket, element2);
+
   });
 });
