@@ -5,6 +5,20 @@
   overflow-y: auto;
 }
 
+.event-io {
+  border: 1px solid;
+  padding: 5px;
+  margin: 5px;
+}
+
+.on-event-io {
+  border-color: blue;
+}
+
+.emit-event-io {
+  border-color: green;
+}
+
 #event-wraper1, #event-wraper2 {
   border: 1px solid silver;
   float: left;

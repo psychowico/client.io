@@ -5,26 +5,51 @@ namespace('clientio', function() {
 
     function ListIo($list, socket) {
       var self = this;
+      self.eventsList = [];
+
       self.$list = $list;
       self.socket = socket;
-      //prepare event html prototype
-      self.$prototype = self.$list.find('.event-prototype').remove();
+      //prepare event html psocketrototype
+      self.$prototype = self.$list.find('.event-prototype')
+                       .removeClass('event-prototype').remove();
       socket.on('*', function() {
-        onEvent.apply(self, arguments);
+        var args = [].slice.apply(arguments);
+        onEvent.apply(self, ['on'].concat(args));
       });
+      socket.emit = (function(socket, coreEmit) {
+        return function() {
+          var args = [].slice.apply(arguments);
+          onEvent.apply(self, ['emit'].concat(args));
+          return coreEmit.apply(socket, arguments);
+        };
+      })(socket, socket.emit);
     }
 
     //private methods
-    function onEvent(eventId, eventArgs) {
+
+    /* type can be 'on' or 'emit' */
+    function onEvent(type, eventId, eventArgs) {
       var fArgs = '';
       if(typeof eventArgs !== 'undefined') {
         fArgs = JSON.stringify(eventArgs);
       }
 
+      // preparing event html representation
       var $event = this.$prototype.clone();
-      $event.find('.event-id').text(eventId);
-      $event.find('.event-body').text(fArgs);
+      $event.find('.event-id')
+              .text(eventId).end()
+            .find('.event-body')
+              .text(fArgs).end()
+            .addClass(type + '-event-io');
+
       this.$list.append($event);
+
+      // store logic, for later filtering etc.
+      this.eventsList.push({
+        id: eventId,
+        args: eventArgs,
+        $rel: $event
+      });
 
       var listHeight = this.$list.prop("scrollHeight");
       this.$list.scrollTop(listHeight);
