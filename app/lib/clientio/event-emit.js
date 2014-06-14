@@ -1,32 +1,35 @@
 namespace('clientio', function() {
 
-  this.eventEmit = function (socket) {
-    $('.btn-event-emit').click(function () {
-        var	eventName = $('.event-name').val();
-        var	eventBody = $('.event-body').val();
+  this.eventEmit = function (socket, element) {
+    var $eventName = element.find('.event-name');
+    var $eventBody = element.find('.event-body');
+    var $eventButton = element.find('.btn-event-emit');
+    var pEventBody = null;
 
-        if ($.trim(eventName) !== '') {
+    $eventButton.click(function () {
+        if ($.trim($eventName.val()) !== '') {
             try {
-                var pEventBody = JSON.parse(eventBody);
+                pEventBody = JSON.parse($eventBody.val());
             } catch (err) {
-                alert('Unrecognized format of event body!');    
+                alert('Unrecognized format of event body!');
             }
 
             if (pEventBody != null) {
-                socket.emit('passEvent', eventName, pEventBody);
+                socket.emit('passEvent', $eventName.val(), pEventBody);
             }
         } else {
-           alert('Specify event name!');
+            alert('Specify event name!');
         }
+
     }).keypress(function (key) {
         if (key.which == 13) {
-            $('.btn-event-emit').click();
+            $eventButton.click();
         }
     });
 
-    $('.event-name').keypress(function (key) {
+    $eventName.keypress(function (key) {
         if (key.which == 13) {
-            $('.btn-event-emit').focus().click();
+            $eventButton.focus().click();
         }
     });
   };
