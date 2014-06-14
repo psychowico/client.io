@@ -16,10 +16,18 @@ namespace('clientio', function() {
 
     //private methods
     function onEvent(eventId, eventArgs) {
+      var fArgs = '';
+      if(typeof eventArgs !== 'undefined') {
+        fArgs = JSON.stringify(eventArgs);
+      }
+
       var $event = this.$prototype.clone();
       $event.find('.event-id').text(eventId);
-      $event.find('.event-body').text(eventArgs);
+      $event.find('.event-body').text(fArgs);
       this.$list.append($event);
+
+      var listHeight = this.$list.prop("scrollHeight");
+      this.$list.scrollTop(listHeight);
     }
 
     //public
