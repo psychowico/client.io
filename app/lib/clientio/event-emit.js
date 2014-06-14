@@ -4,12 +4,13 @@ namespace('clientio', function() {
     $('.btn-event-emit').click(function () {
         var	eventName = $('.event-name').val();
         var	eventBody = $('.event-body').val();
+        var pEventBody = null;
 
         if ($.trim(eventName) !== '') {
             try {
-                var pEventBody = JSON.parse(eventBody);
+                pEventBody = JSON.parse(eventBody);
             } catch (err) {
-                alert('Unrecognized format of event body!');    
+                alert('Unrecognized format of event body!');
             }
 
             if (pEventBody != null) {
