@@ -36,9 +36,9 @@ namespace('clientio', function() {
 
       // preparing event html representation
       var $event = this.$prototype.clone();
-      $event.find('.event-id')
+      $event.find('.event-io-id')
               .text(eventId).end()
-            .find('.event-body')
+            .find('.event-io-body')
               .text(fArgs).end()
             .addClass(type + '-event-io');
 
