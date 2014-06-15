@@ -7,11 +7,11 @@ namespace('clientio', function() {
     //download socket.io client library, override $emit function
     //and we will can catch all events by "*" pattern
 
-    var element1 = $('#event-wraper1');
-    clientio.eventEmit(socket, element1);
+    var $element1 = $('#event-wrapper1');
+    clientio.eventEmit(socket, $element1);
 
-    var element2 = $('#event-wraper2');
-    clientio.eventEmit(socket, element2);
+    var $element2 = $('#event-wrapper2');
+    clientio.eventEmit(socket, $element2);
 
     var $list = $('#events-list');
     var listIo = new clientio.ListIo($list, socket);

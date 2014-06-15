@@ -19,9 +19,20 @@
   border-color: green;
 }
 
-#event-wraper1, #event-wraper2 {
+#event-wrapper1, #event-wrapper2 {
   border: 1px solid silver;
   float: left;
   margin: 10px;
   padding: 10px;
+}
+
+.event-wrapper p {
+  vertical-align:top;
+}
+
+.btn-event-emit {
+  cursor:pointer; 
+  background-color: black; 
+  color:white; 
+  padding:10px;
 }

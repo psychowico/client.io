@@ -12,8 +12,3 @@ module.exports = exports =
 
             socket.on 'echo', (msg)->
                 socket.emit 'test.echo', {msg: msg}
-
-             socket.on 'passEvent', (name, body)->
-                socket.emit 'test.message', {name: name}
-                socket.emit 'test.message', {body: body}
-                console.log name + " is " + typeof body
