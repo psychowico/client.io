@@ -1,0 +1,16 @@
+{
+  "name": "client.io",
+  "version": "0.0.0",
+  "dependencies": {
+    "node-static": "^0.7.3",
+    "socket.io": "^0.9.17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/psychowico/client.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/psychowico/client.io/issues"
+  },
+  "homepage": "https://github.com/psychowico/client.io"
+}
