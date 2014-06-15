@@ -9,6 +9,7 @@
         <title>client.io</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/styles/main.css">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -17,7 +18,15 @@
 
         <!-- Add your site or application content here -->
         <!-- <p>Hello world! This is HTML5 Boilerplate.</p> -->
-        <div id="event-wraper1">    
+
+        <div id="events-list">
+            <div class="event-io event-prototype">
+                <span class="event-io-id"></span>
+                <div class="event-io-body"></div>
+            </div>
+        </div>
+
+        <div id="event-wraper1">
             <div>
                 <p>Type event name: <input type="text" class="event-name"></p>
             </div>
@@ -26,22 +35,20 @@
             </div>
             <div>
                 <span tabindex="0" style="cursor:pointer; background-color: black; color:white; padding:10px;" class="btn-event-emit">EMIT</span>
-            </div>    
+            </div>
         </div>
 
-        <div id="event-wraper2">    
+        <div id="event-wraper2">
             <div>
                 <p>Type event name: <input type="text" class="event-name"></p>
             </div>
             <div>
                 <p style="vertical-align:top;">Type event body: <textarea class="event-body" cols="19" rows="5"></textarea></p>
-            </div> 
+            </div>
             <div>
                 <span tabindex="0" style="cursor:pointer; background-color: black; color:white; padding:10px;" class="btn-event-emit">EMIT</span>
-            </div>     
+            </div>
         </div>
-
-        
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="/lib/core.js"></script>
@@ -49,5 +56,6 @@
         <script src="/lib/clientio/connect.js"></script>
         <script src="/lib/clientio/app.js"></script>
         <script src="/lib/clientio/event-emit.js"></script>
+        <script src="/lib/clientio/list-io.js"></script>
     </body>
 </html>
