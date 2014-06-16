@@ -3,7 +3,6 @@ socketio = require('socket.io')
 module.exports = exports =
     start: (server)->
         @io = socketio.listen server
-
         @io.sockets.on 'connection', (socket)->
             socket.emit 'test.hello', {hello: true}
             setTimeout( ->

@@ -17,21 +17,21 @@
  clientio.msg.alert('help me!');
  */
 
-(function(exports, undefined) {
-  exports.namespace = function(name, body) {
-    var parts = name.split('.');
-    var scope = exports;
-    var parent = undefined;
-    for(var i = 0; i < parts.length; i++) {
-      if(scope[parts[i]] === undefined) {
-        scope[parts[i]] = {
-          __parent: parent,
-          __namespace: parts.slice(0, i + 1).join('.')
-        };
-      }
-      scope  = scope[parts[i]];
-      parent = scope;
+(function (exports, undefined) {
+    exports.namespace = function (name, body) {
+        var parts = name.split('.');
+        var scope = exports;
+        var parent = undefined;
+        for (var i = 0; i < parts.length; i++) {
+            if (scope[parts[i]] === undefined) {
+                scope[parts[i]] = {
+                    __parent: parent,
+                    __namespace: parts.slice(0, i + 1).join('.')
+                };
+            }
+            scope = scope[parts[i]];
+            parent = scope;
+        }
+        if (body) body.apply(scope);
     }
-    if(body) body.apply(scope);
-  }
 })(window);
