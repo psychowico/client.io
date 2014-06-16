@@ -1,4 +1,4 @@
-namespace('clientio', function() {
+namespace('clientio', function () {
 
   this.eventEmit = function (socket, element) {
     var $eventName = element.find('.event-name');
@@ -7,7 +7,7 @@ namespace('clientio', function() {
 
     $eventButton.click(function () {
         var pEventBody = null;
-        
+
         if ($.trim($eventName.val()) !== '') {
             try {
                 pEventBody = JSON.parse($eventBody.val());
@@ -16,7 +16,7 @@ namespace('clientio', function() {
             }
 
             if (pEventBody != null) {
-                socket.emit($eventName.val() , pEventBody);
+                socket.emit($eventName.val(), pEventBody, 'raz', 'dwa');
             }
         } else {
             alert('Specify event name!');
