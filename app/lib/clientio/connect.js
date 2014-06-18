@@ -1,45 +1,48 @@
 "use strict";
 
-namespace('clientio', function() {
+namespace('clientio', function () {
 
-  this.connect = function(address, success) {
-    $.getScript(address + '/socket.io/socket.io.js')
-     .done(libFinded).fail(libError);
+    this.connect = function (address, success) {
+        $.getScript(address + '/socket.io/socket.io.js')
+            .done(libFinded).fail(libError);
 
-    function libFinded() {
-      var socket = prepareSocket(address);
-      success(socket);
-    }
-    function libError(jqxhr, settings, exception ) {
-      console.error(exception);
-    }
-  };
+        function libFinded() {
+            addWildcardSupport();
+            var socket = io.connect(address);
+            success(socket);
+        }
 
-  function prepareSocket(address) {
-    var socket = io.connect(address);
-    // socket.io versions smaller than 1.0
-    if(socket.$emit) {
-      var _$emit = socket.$emit;
-      socket.$emit = function() {
-        var args = Array.prototype.slice.call(arguments);
-        _$emit.apply(socket, ['*'].concat(args));
-        _$emit.apply(socket, arguments);
-      };
+        function libError(jqxhr, settings, exception) {
+            console.error(exception);
+        }
+    };
+
+    function addWildcardSupport() {
+        // versions 0.8.*-0.9.*
+        if (io.SocketNamespace) {
+            io.SocketNamespace.prototype.$emit = (function ($orgEmit) {
+                return function () {
+                    var args = Array.prototype.slice.call(arguments);
+                    $orgEmit.apply(this, ['*'].concat(args));
+                    $orgEmit.apply(this, arguments);
+                };
+            })(io.SocketNamespace.prototype.$emit);
+        }
+        //version 1.0.*+
+        else if (io.Socket.prototype.onevent) {
+            //more complicated here, finded by long research
+            io.Socket.prototype.onevent = (function (emit) {
+                return function (packet) {
+                    var args = packet.data || []
+
+                    if (packet.id) {
+                        args.push(this.ack(packet.id));
+                    }
+
+                    this.io.emit.apply(this, args);
+                    this.io.emit.apply(this, ['*'].concat(args));
+                };
+            })(io.Socket.prototype.emit);
+        }
     }
-    else {
-      // var _socket = socket.io.engine;
-      // var _emit = _socket.emit;
-      // _socket.emit = function(first) {
-      //   // console.log(first);
-      //   _emit.apply(_socket, arguments);
-      // };
-      // var _emit = _socket.emit;
-      // _socket.emit = function() {
-      //   var args = Array.prototype.slice.call(arguments);
-      //   _emit.apply(_socket, ['*'].concat(args));
-      //   _emit.apply(_socket, arguments);
-      // };
-    }
-    return socket;
-  }
 });
