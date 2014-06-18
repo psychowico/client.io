@@ -1,6 +1,12 @@
 node_static = require 'node-static'
 http        = require 'http'
-testServer  = require './test/index.coffee'
+socketio    = require 'socket.io'
+
+# only socket.io < 1.0 have version attribute
+if socketio.version?
+    testServer = require './test/old-socket-io'
+else
+    testServer = require './test/socket-io'
 
 tests_enabled = false
 process.argv.forEach (val, index, array)->
