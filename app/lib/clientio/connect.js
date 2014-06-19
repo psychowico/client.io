@@ -14,6 +14,7 @@ namespace('clientio', function () {
 
         function libError(jqxhr, settings, exception) {
             console.error(exception);
+            alert("Cannot connect to provided server! Check server address and running of node.js with socket.io on this server.");
         }
     };
 
