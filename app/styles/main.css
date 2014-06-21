@@ -37,6 +37,10 @@
   padding:10px;
 }
 
+.event-name {
+  width: 172px;
+}
+
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }

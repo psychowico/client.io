@@ -10,7 +10,7 @@ namespace('clientio', function () {
       //download socket.io client library, override $emit function
       //and we will can catch all events by "*" pattern
       $('#modal-server-chose').dialog("close");
-      clientio.setcookie('last-connect', ADDRESS, 1);
+      clientio.cookieHandler.setCookie('last-connect', ADDRESS, 1);
 
       var $element1 = $('#event-wrapper1');
       clientio.eventEmit(socket, $element1);

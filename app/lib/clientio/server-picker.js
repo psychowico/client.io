@@ -32,7 +32,7 @@ namespace ('clientio', function () {
                 }
         });
 
-        var prevAddress = clientio.readcookie('last-connect');
+        var prevAddress = clientio.cookieHandler.getCookie('last-connect');
 
         if (prevAddress) {
             $('#server-address').val(prevAddress);
