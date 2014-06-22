@@ -2,9 +2,11 @@
 
 namespace ('clientio', function () {
 
-	this.cookieHandler = {
+	this.localData = {
 
 		"setCookie": function  (name, val, hours) {
+            var val = val.toLowerCase();
+            
 			if (hours) {
             	var date = new Date();
             	date.setTime(date.getTime()+(hours*1000*60*60));
@@ -30,6 +32,24 @@ namespace ('clientio', function () {
 
             	return false;
         	}
-		}
+		},
+
+        "setLocalStorage": function (name, val) {
+            //in case if local storage item was array
+            var val = val.toLowerCase();
+
+            if (name === "server-addresses") {
+                if (localStorage.getItem(name) === null) {
+                    var  values = [];
+                } else {
+                    var values = localStorage.getItem(name).split(',');
+                }
+
+                if (values.indexOf(val) === -1) {
+                    values.push(val);
+                    localStorage.setItem(name, values); 
+                }
+            }
+        }
 	};
 });

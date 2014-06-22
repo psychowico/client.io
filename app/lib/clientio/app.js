@@ -3,14 +3,14 @@
 namespace('clientio', function () {
 
   this.tryConnect = function (address) {
-    var ADDRESS = $.trim(address);
 
-    this.connect(ADDRESS, function (socket) {
+    this.connect(address, function (socket) {
       //we need ask user for his socket.io server instance
       //download socket.io client library, override $emit function
       //and we will can catch all events by "*" pattern
       $('#modal-server-chose').dialog("close");
-      clientio.cookieHandler.setCookie('last-connect', ADDRESS, 1);
+      clientio.localData.setCookie('last-connect', address, 1);
+      clientio.localData.setLocalStorage("server-addresses", address);
 
       var $element1 = $('#event-wrapper1');
       clientio.eventEmit(socket, $element1);
