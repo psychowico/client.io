@@ -2,6 +2,12 @@
 
 namespace('clientio', function () {
 
+  $(function () {
+    clientio.showModal();
+    clientio.checkLastAddress();
+    clientio.readAddressList();
+  });
+
   this.tryConnect = function (address) {
 
     this.connect(address, function (socket) {
@@ -10,7 +16,7 @@ namespace('clientio', function () {
       //and we will can catch all events by "*" pattern
       $('#modal-server-chose').dialog("close");
       clientio.localData.setCookie('last-connect', address, 1);
-      clientio.localData.setLocalStorage("server-addresses", address);
+      clientio.localData.setLocalStorageItem("server-addresses", address);
 
       var $element1 = $('#event-wrapper1');
       clientio.eventEmit(socket, $element1);

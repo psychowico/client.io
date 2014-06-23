@@ -1,9 +1,11 @@
 "use strict";
 
 namespace ('clientio', function () {
-    $(function () {
-        var $address = $('#server-address');
 
+    var $address = $('#server-address');
+
+    this.showModal = function () {
+        
         function protocolCheck (address) {
             if (address.substr(0,7) === 'http://' || address.substr(0,8) === 'https://') {
                 return address;
@@ -45,25 +47,27 @@ namespace ('clientio', function () {
             .click(function () {
                 $address.autocomplete('search', $address.val());
             });
+    };
 
-
+    this.checkLastAddress = function () {
         var prevAddress = clientio.localData.getCookie('last-connect');
 
         if (prevAddress) {
             $address.val(prevAddress);
         }
+    };
 
+    this.readAddressList = function () {
         var addressesSaved = localStorage.getItem('server-addresses'); 
-
+        var addresses = [];
+        
         if (addressesSaved !== null) {
-            var addresses = addressesSaved.split(',').reverse();
-        } else {
-            var addresses = [];
+            addresses = addressesSaved.split(',').reverse();
         }
 
         $address.autocomplete({
                 source: addresses,
                 minLength: 0
         });
-    });
+    };
 });
