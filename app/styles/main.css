@@ -36,3 +36,25 @@
   color:white;
   padding:10px;
 }
+
+.event-name {
+  width: 172px;
+}
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+* html .ui-autocomplete {
+  height: 100px;
+}
+
+#server-address {
+  width: 250px;
+}
