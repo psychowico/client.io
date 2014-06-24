@@ -43,9 +43,13 @@ namespace('clientio', function () {
 
         storage: {
             get: function (name, defaultValue) {
+                if (typeof defaultValue === 'undefined') {
+                    defaultValue = null;
+                }
+
                 var result = localStorage.getItem(name);
                 if (result === null) {
-                    return defaultValue || null;
+                    return defaultValue;
                 }
 
                 try {
