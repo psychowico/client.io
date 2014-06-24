@@ -1,26 +1,35 @@
 "use strict";
 
 namespace('clientio', function () {
-  var ADDRESS = 'http://localhost:8080';
-  console.log(clientio.addons);
-  var EmitsHistory = clientio.addons.EmitsHistory;
-  var ListIo       = clientio.ListIo;
+    var EmitsHistory = clientio.addons.EmitsHistory;
+    var ListIo       = clientio.ListIo;
 
-  this.connect(ADDRESS, function (socket) {
-    //we need ask user for his socket.io server instance
-    //download socket.io client library, override $emit function
-    //and we will can catch all events by "*" pattern
+    $(function () {
+        clientio.showModal();
+        clientio.checkLastAddress();
+        clientio.readAddressList();
+    });
 
-    var $element1 = $('#event-wrapper1');
-    clientio.eventEmit(socket, $element1);
+    this.tryConnect = function (address) {
+        this.connect(address, function (socket) {
+            //we need ask user for his socket.io server instance
+            //download socket.io client library, override $emit function
+            //and we will can catch all events by "*" pattern
+            $('#modal-server-chose').dialog("close");
+            clientio.localData.setCookie('last-connect', address, 1);
+            clientio.localData.setLocalStorageItem("server-addresses", address);
 
-    var $element2 = $('#event-wrapper2');
-    clientio.eventEmit(socket, $element2);
+            var $element1 = $('#event-wrapper1');
+            clientio.eventEmit(socket, $element1);
 
-    var $list = $('#events-list');
-    var listIo = new ListIo($list, socket);
+            var $element2 = $('#event-wrapper2');
+            clientio.eventEmit(socket, $element2);
 
-    var $emitsHistory = $('#emits-history');
-    var emitsHistory = new EmitsHistory($emitsHistory, socket);
-  });
+            var $list = $('#events-list');
+            var listIo = new ListIo($list, socket);
+
+            var $emitsHistory = $('#emits-history');
+            var emitsHistory = new EmitsHistory($emitsHistory, socket);
+        });
+    };
 });

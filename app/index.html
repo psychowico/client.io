@@ -11,6 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/styles/main.css">
         <link rel="stylesheet" href="/styles/emits-history.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -19,6 +20,10 @@
 
         <!-- Add your site or application content here -->
         <!-- <p>Hello world! This is HTML5 Boilerplate.</p> -->
+        <div id="modal-server-chose" title ="Pick a server">
+            <p>Type or choose server name to connect to:</p>
+            <input id="server-address" type="text" name="server-address">
+        </div>
 
         <div id="emits-history">
             <div class="history-item history-prototype">
@@ -59,6 +64,7 @@
         </div>
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script src="/lib/core.js"></script>
         <script src="/lib/clientio/storage.js"></script>
         <script src="/lib/clientio/events-bus.js"></script>
@@ -66,6 +72,8 @@
         <script src="/lib/clientio/event-emit.js"></script>
         <script src="/lib/clientio/list-io.js"></script>
         <script src="/lib/clientio/addons/emits-history.js"></script>
+        <script src="/lib/clientio/server-picker.js"></script>
+        <script src="/lib/clientio/local-data-manager.js"></script>
         <script src="/lib/clientio/app.js"></script>
     </body>
 </html>
