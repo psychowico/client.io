@@ -1,27 +1,27 @@
 "use strict";
 
-namespace ('clientio', function () {
+namespace('clientio', function () {
 
     this.localData = {
 
-        "setCookie": function  (name, val, hours) {
+        "setCookie": function (name, val, hours) {
             var val = val.toLowerCase();
-            var expire ="";
-            
+            var expire = "";
+
             if (hours) {
                 var date = new Date();
-                date.setTime(date.getTime()+(hours*1000*60*60));
-                expire = "; expires="+date.toGMTString();
+                date.setTime(date.getTime() + (hours * 1000 * 60 * 60));
+                expire = "; expires=" + date.toGMTString();
             }
 
-            document.cookie = name+"="+val+expire+"; path=/";
+            document.cookie = name + "=" + val + expire + "; path=/";
         },
 
         "getCookie": function (cookieName) {
             if (document.cookie != "") {
                 var cookies = document.cookie.split('; ');
 
-                for (var i=0; i<cookies.length; i++) {
+                for (var i = 0; i < cookies.length; i++) {
                     var iCookieName = cookies[i].split('=')[0];
                     var iCookieVal = cookies[i].split('=')[1];
 
@@ -39,7 +39,7 @@ namespace ('clientio', function () {
             var val = val.toLowerCase();
 
             if (name === "server-addresses") {
-                var  values = [];
+                var values = [];
 
                 if (localStorage.getItem(name) !== null) {
                     values = localStorage.getItem(name).split(',');
@@ -47,7 +47,7 @@ namespace ('clientio', function () {
 
                 if (values.indexOf(val) === -1) {
                     values.push(val);
-                    localStorage.setItem(name, values); 
+                    localStorage.setItem(name, values);
                 }
             }
         }
