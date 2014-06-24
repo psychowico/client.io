@@ -2,6 +2,8 @@
 
 namespace('clientio.addons', function () {
 
+    var storage      = clientio.localData.storage;
+
     this.EmitsHistory = (function () {
 
         function EmitsHistory($history, socket) {
@@ -33,6 +35,7 @@ namespace('clientio.addons', function () {
                 name: name,
                 args: eventArgs
             });
+            storage.set('emits-history', this.history);
         }
 
         return EmitsHistory;

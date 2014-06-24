@@ -2,9 +2,16 @@
 
 namespace('clientio', function () {
 
+    // browser feature check - later maybe we should consider use another
+    // storage type if this one fail
+    if (!localStorage || !localStorage.getItem || !localStorage.setItem) {
+        console.error("window.localStorage is not supporting. Can not continue.");
+        return;
+    }
+
     this.localData = {
 
-        "setCookie": function (name, val, hours) {
+        setCookie: function (name, val, hours) {
             var val = val.toLowerCase();
             var expire = "";
 
@@ -17,7 +24,7 @@ namespace('clientio', function () {
             document.cookie = name + "=" + val + expire + "; path=/";
         },
 
-        "getCookie": function (cookieName) {
+        getCookie: function (cookieName) {
             if (document.cookie != "") {
                 var cookies = document.cookie.split('; ');
 
@@ -34,21 +41,28 @@ namespace('clientio', function () {
             }
         },
 
-        "setLocalStorageItem": function (name, val) {
-            //in case if local storage item was array
-            var val = val.toLowerCase();
-
-            if (name === "server-addresses") {
-                var values = [];
-
-                if (localStorage.getItem(name) !== null) {
-                    values = localStorage.getItem(name).split(',');
+        storage: {
+            get: function (name, defaultValue) {
+                if (typeof defaultValue === 'undefined') {
+                    defaultValue = null;
                 }
 
-                if (values.indexOf(val) === -1) {
-                    values.push(val);
-                    localStorage.setItem(name, values);
+                var result = localStorage.getItem(name);
+                if (result === null) {
+                    return defaultValue;
                 }
+
+                try {
+                    return JSON.parse(result);
+                } catch (e) {
+                    localStorage.removeItem(name);
+                    return defaultValue;
+                }
+            },
+            set: function (name, value) {
+                var json = JSON.stringify(value);
+                localStorage.setItem(name, json);
+                return this;
             }
         }
     };
