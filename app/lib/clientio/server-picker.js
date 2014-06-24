@@ -3,6 +3,7 @@
 namespace('clientio', function () {
 
     var $address = $('#server-address');
+    var storage = clientio.localData.storage;
 
     this.showModal = function () {
 
@@ -57,12 +58,7 @@ namespace('clientio', function () {
     };
 
     this.readAddressList = function () {
-        var addressesSaved = localStorage.getItem('server-addresses');
-        var addresses = [];
-
-        if (addressesSaved !== null) {
-            addresses = addressesSaved.split(',').reverse();
-        }
+        var addresses = storage.get('server-addresses', []).reverse();
 
         $address.autocomplete({
             source: addresses,
