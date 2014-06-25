@@ -19,6 +19,10 @@ namespace('clientio', function () {
         if (servers.indexOf(lcAddress) === -1) {
             servers.push(lcAddress);
             storage.set("server-addresses", servers);
+        } else {
+            servers.splice(servers.indexOf(lcAddress), 1);
+            servers.push(lcAddress);
+            storage.set("server-addresses", servers);
         }
     }
 
