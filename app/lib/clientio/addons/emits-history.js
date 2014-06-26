@@ -2,7 +2,7 @@
 
 namespace('clientio.addons', function () {
 
-    var storage      = clientio.localData.storage;
+    var storage = clientio.localData.storage;
 
     this.EmitsHistory = (function () {
 
@@ -34,6 +34,7 @@ namespace('clientio.addons', function () {
             });
         }
 
+        // public methods
         EmitsHistory.prototype.addEntryToDOM = function (entry) {
             var self = this;
 
@@ -43,7 +44,7 @@ namespace('clientio.addons', function () {
                 var historyEntry = $(this).data('rel');
                 self.emit('choosed', historyEntry);
             });
-            var args = '{test..';//entry.eventArgs;
+            var args = JSON.stringify(entry.args);
             $entry
                 .find('.event-name').text(entry.name).end()
                 .find('.event-args').text(args);
@@ -56,10 +57,12 @@ namespace('clientio.addons', function () {
             saveHistory.call(this);
         }
 
-        // private method
+        // private methods
+
         function saveHistory() {
             storage.set(this.address + '-emits-history', this.history);
         }
+
         function onEmit() {
             var args = [].slice.apply(arguments);
 

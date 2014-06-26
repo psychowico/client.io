@@ -11,6 +11,9 @@
   width: 100%;
   padding: 4px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .history-item .href .event-name {
