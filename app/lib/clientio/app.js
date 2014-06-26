@@ -36,11 +36,14 @@ namespace('clientio', function () {
             var $list = $('#events-list');
             var listIo = new ListIo($list, socket);
 
-            var $emitsHistory = $('#emits-history');
+            var $emitsHistory = $('#emits-history .history-list');
             var emitsHistory = new EmitsHistory($emitsHistory, address, socket);
             emitsHistory.on('choosed', function(historyEntry) {
                 emitter1.updateEmitterValues(historyEntry.name, historyEntry.args);
                 emitter2.updateEmitterValues(historyEntry.name, historyEntry.args);
+            });
+            $('#emits-history .clear-history').on('click', function() {
+                emitsHistory.clearHistory();
             });
         });
     };

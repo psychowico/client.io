@@ -29,6 +29,9 @@ namespace('clientio.addons', function () {
                 onEmit.apply(self, arguments);
                 return _originalEmit.apply(socket, arguments);
             };
+            $history.find('.clear-history').on('click', function() {
+                clearHistory.apply(self);
+            });
         }
 
         EmitsHistory.prototype.addEntryToDOM = function (entry) {
@@ -47,7 +50,16 @@ namespace('clientio.addons', function () {
             this.$history.prepend($entry);
         }
 
+        EmitsHistory.prototype.clearHistory = function () {
+            this.$history.empty();
+            this.history = [];
+            saveHistory.call(this);
+        }
+
         // private method
+        function saveHistory() {
+            storage.set(this.address + '-emits-history', this.history);
+        }
         function onEmit() {
             var args = [].slice.apply(arguments);
 
@@ -61,7 +73,7 @@ namespace('clientio.addons', function () {
             };
             this.history.push(entry);
             this.addEntryToDOM(entry);
-            storage.set(this.address + '-emits-history', this.history);
+            saveHistory.call(this);
         }
 
         return EmitsHistory;
