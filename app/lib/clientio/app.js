@@ -28,20 +28,20 @@ namespace('clientio', function () {
         this.connect(address, function (socket) {
             $('#modal-server-chose').dialog("close");
             clientio.localData.setCookie('last-connect', address, 1);
-
             rememberAddress(address);
 
-            var $element1 = $('#event-wrapper1');
-            clientio.eventEmit(socket, $element1);
-
-            var $element2 = $('#event-wrapper2');
-            clientio.eventEmit(socket, $element2);
+            var emitter1 = new clientio.eventEmit(socket, $('#event-wrapper1'));
+            var emitter2 = new clientio.eventEmit(socket, $('#event-wrapper2'));
 
             var $list = $('#events-list');
             var listIo = new ListIo($list, socket);
 
             var $emitsHistory = $('#emits-history');
-            var emitsHistory = new EmitsHistory($emitsHistory, socket);
+            var emitsHistory = new EmitsHistory($emitsHistory, address, socket);
+            emitsHistory.on('choosed', function(historyEntry) {
+                emitter1.updateEmitterValues(historyEntry.name, historyEntry.args);
+                emitter2.updateEmitterValues(historyEntry.name, historyEntry.args);
+            });
         });
     };
 });

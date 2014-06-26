@@ -6,14 +6,23 @@ namespace('clientio.addons', function () {
 
     this.EmitsHistory = (function () {
 
-        function EmitsHistory($history, socket) {
+        EmitsHistory.prototype = new clientio.EventsBus()
+        function EmitsHistory($history, address, socket) {
             var self = this;
 
+            self.history = storage.get(address + '-emits-history', []);
             self.$history = $history;
+            self.address = address;
             self.socket = socket;
+
             //prepare event html psocketrototype
             self.$prototype = $history.find('.history-prototype')
                 .removeClass('history-prototype').remove();
+
+            var historyLength = this.history.length;
+            for (var i = 0; i < historyLength; i++) {
+                this.addEntryToDOM(this.history[i]);
+            }
 
             var _originalEmit = socket.emit;
             socket.emit = function () {
@@ -22,7 +31,21 @@ namespace('clientio.addons', function () {
             };
         }
 
-        EmitsHistory.prototype.history = [];
+        EmitsHistory.prototype.addEntryToDOM = function (entry) {
+            var self = this;
+
+            var $entry = this.$prototype.clone();
+            $entry.data('rel', entry);
+            $entry.on('click', function() {
+                var historyEntry = $(this).data('rel');
+                self.emit('choosed', historyEntry);
+            });
+            var args = '{test..';//entry.eventArgs;
+            $entry
+                .find('.event-name').text(entry.name).end()
+                .find('.event-args').text(args);
+            this.$history.prepend($entry);
+        }
 
         // private method
         function onEmit() {
@@ -31,11 +54,14 @@ namespace('clientio.addons', function () {
             var name = args[0];
             var eventArgs = args.slice(1);
 
-            this.history.push({
+            eventArgs = eventArgs.length > 0 ? eventArgs[0] : null;
+            var entry = {
                 name: name,
                 args: eventArgs
-            });
-            storage.set('emits-history', this.history);
+            };
+            this.history.push(entry);
+            this.addEntryToDOM(entry);
+            storage.set(this.address + '-emits-history', this.history);
         }
 
         return EmitsHistory;

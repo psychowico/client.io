@@ -9,11 +9,12 @@ namespace('clientio', function () {
         function libFinded() {
             addWildcardSupport();
             var socket = io.connect(address);
-            success(socket);
+            socket.on('connect', function() {
+                success(socket);
+            });
         }
 
         function libError(jqxhr, settings, exception) {
-            console.error(exception);
             alert("Cannot connect to provided server! Check server address and running of node.js with socket.io on this server.");
         }
     };

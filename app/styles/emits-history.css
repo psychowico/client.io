@@ -3,4 +3,17 @@
   width: 300px;
   float: left;
   height: 90%;
+  padding: 5px;
 }
+
+.history-item .href {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  text-align: left;
+}
+
+.history-item .href .event-name {
+  background-color: #CC9900;
+}
+
