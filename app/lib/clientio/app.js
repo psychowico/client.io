@@ -16,14 +16,11 @@ namespace('clientio', function () {
     function rememberAddress(address) {
         var lcAddress = address.toLowerCase();
         var servers = storage.get("server-addresses", []);
-        if (servers.indexOf(lcAddress) === -1) {
-            servers.push(lcAddress);
-            storage.set("server-addresses", servers);
-        } else {
+        if (servers.indexOf(lcAddress) !== -1) {
             servers.splice(servers.indexOf(lcAddress), 1);
-            servers.push(lcAddress);
-            storage.set("server-addresses", servers);
-        }
+        } 
+        servers.push(lcAddress);
+        storage.set("server-addresses", servers);
     }
 
     this.tryConnect = function (address) {
