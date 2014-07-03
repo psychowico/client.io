@@ -31,7 +31,7 @@ namespace('clientio', function(undefined) {
     EventsBus.prototype.emit = function(eventName) {
         var args = [];
         if(arguments.length > 1) {
-            args = __slice(arguments, 1);
+            args = __slice.call(arguments, 1);
         }
 
         var __listeners = this.listeners[eventName];

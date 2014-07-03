@@ -10,6 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/styles/emits-history.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     </head>
     <body>
@@ -22,6 +23,18 @@
         <div id="modal-server-chose" title ="Pick a server">
             <p>Type or choose server name to connect to:</p>
             <input id="server-address" type="text" name="server-address">
+        </div>
+
+        <div id="emits-history">
+            <button class="clear-history">Clear History</button>
+            <div class="history-list">
+                <div class="history-item history-prototype">
+                    <button class="href">
+                        <span class="label event-name"></span>
+                        <span class="event-args"></span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div id="events-list">
@@ -63,6 +76,7 @@
         <script src="/lib/clientio/connect.js"></script>
         <script src="/lib/clientio/event-emit.js"></script>
         <script src="/lib/clientio/list-io.js"></script>
+        <script src="/lib/clientio/addons/emits-history.js"></script>
         <script src="/lib/clientio/server-picker.js"></script>
         <script src="/lib/clientio/app.js"></script>
     </body>
