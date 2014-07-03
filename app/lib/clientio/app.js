@@ -20,7 +20,7 @@ namespace('clientio', function () {
         var servers = storage.get("server-addresses", []);
         if (servers.indexOf(lcAddress) !== -1) {
             servers.splice(servers.indexOf(lcAddress), 1);
-        } 
+        }
         servers.push(lcAddress);
         storage.set("server-addresses", servers);
     }
@@ -32,7 +32,6 @@ namespace('clientio', function () {
             rememberAddress(address);
 
             var emitter1 = new clientio.eventEmit(socket, $('#event-wrapper1'));
-            var emitter2 = new clientio.eventEmit(socket, $('#event-wrapper2'));
 
             var $list = $('#events-list');
             var listIo = new ListIo($list, socket);
@@ -41,8 +40,13 @@ namespace('clientio', function () {
             var emitsHistory = new EmitsHistory($emitsHistory, address, socket);
             emitsHistory.on('choosed', function(historyEntry) {
                 emitter1.updateEmitterValues(historyEntry.name, historyEntry.args);
-                emitter2.updateEmitterValues(historyEntry.name, historyEntry.args);
             });
+
+            emitter1.on('event.emitted', function(data) {
+                console.log(data);
+                emitsHistory.addEventToHistory(data.name, data.args);
+            });
+
             $('#emits-history .clear-history').on('click', function() {
                 emitsHistory.clearHistory();
             });

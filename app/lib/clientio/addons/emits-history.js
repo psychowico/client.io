@@ -21,21 +21,29 @@ namespace('clientio.addons', function () {
 
             var historyLength = this.history.length;
             for (var i = 0; i < historyLength; i++) {
-                this.addEntryToDOM(this.history[i]);
+                addEntryToDOM.call(this, this.history[i]);
             }
-
-            var _originalEmit = socket.emit;
-            socket.emit = function () {
-                onEmit.apply(self, arguments);
-                return _originalEmit.apply(socket, arguments);
-            };
-            $history.find('.clear-history').on('click', function() {
-                clearHistory.apply(self);
-            });
         }
 
         // public methods
-        EmitsHistory.prototype.addEntryToDOM = function (entry) {
+        EmitsHistory.prototype.addEventToHistory = function (name, eventArgs) {
+            var entry = {
+                name: name,
+                args: eventArgs
+            };
+            this.history.push(entry);
+            addEntryToDOM.call(this, entry);
+            saveHistory.call(this);
+        }
+        EmitsHistory.prototype.clearHistory = function () {
+            this.$history.empty();
+            this.history = [];
+            saveHistory.call(this);
+        }
+
+        // private methods
+
+        function addEntryToDOM(entry) {
             var self = this;
 
             var $entry = this.$prototype.clone();
@@ -50,33 +58,8 @@ namespace('clientio.addons', function () {
                 .find('.event-args').text(args);
             this.$history.prepend($entry);
         }
-
-        EmitsHistory.prototype.clearHistory = function () {
-            this.$history.empty();
-            this.history = [];
-            saveHistory.call(this);
-        }
-
-        // private methods
-
         function saveHistory() {
             storage.set(this.address + '-emits-history', this.history);
-        }
-
-        function onEmit() {
-            var args = [].slice.apply(arguments);
-
-            var name = args[0];
-            var eventArgs = args.slice(1);
-
-            eventArgs = eventArgs.length > 0 ? eventArgs[0] : null;
-            var entry = {
-                name: name,
-                args: eventArgs
-            };
-            this.history.push(entry);
-            this.addEntryToDOM(entry);
-            saveHistory.call(this);
         }
 
         return EmitsHistory;

@@ -10,8 +10,8 @@ namespace('clientio', function () {
 
         self.$eventButton.click(function () {
             var pEventBody = null;
-
-            if ($.trim(self.$eventName.val()) !== '') {
+            var pEventName = $.trim(self.$eventName.val());
+            if (pEventName !== '') {
                 try {
                     pEventBody = JSON.parse(self.$eventBody.val());
                 } catch (err) {
@@ -19,7 +19,11 @@ namespace('clientio', function () {
                 }
 
                 if (pEventBody != null) {
-                    socket.emit(self.$eventName.val(), pEventBody);
+                    socket.emit(pEventName, pEventBody);
+                    self.emit('event.emitted', {
+                        name: pEventName,
+                        args: pEventBody
+                    });
                 }
             } else {
                 alert('Specify event name!');
@@ -39,6 +43,7 @@ namespace('clientio', function () {
 
         return self;
     };
+    this.eventEmit.prototype = new clientio.EventsBus();
 
     this.eventEmit.prototype.updateEmitterValues = function (eventName, eventArgs) {
         this.$eventName.val(eventName);
